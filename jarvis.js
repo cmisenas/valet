@@ -4,7 +4,7 @@
 	var v = "1.10.2";
 
 	// check for jQuery. if it exists, verify it's not too old.
-	if (window.jQuery === undefined || window.jQuery.fn.jquery < v) {
+	if (window.jQuery === undefined || greaterVersion(window.jQuery.fn.jquery, v) === 2) {
 		var done = false;
 		var script = document.createElement("script");
 		script.src = "http://ajax.googleapis.com/ajax/libs/jquery/" + v + "/jquery.min.js";
@@ -18,7 +18,24 @@
 	} else {
 		initJarvis();
 	}
-  
+
+  function greaterVersion(vStr1, vStr2) {
+    var vArr1 = vStr1.split('.'),
+        vArr2 = vStr2.split('.'),
+        vNum1, vNum2;
+    for (var i = 0; i < vArr1.length; i++) {
+      vNum1 = parseInt(vArr1[i], 10);
+      vNum2 = parseInt(vArr2[i], 10);
+      if (vNum1 === vNum2) {
+        continue;
+      } else if (vNum1 < vNum2) {
+        return 2;
+      } else {
+        return 1;
+      }
+    }
+    return false;
+  }
 	
 	function initJarvis() {
 		(window.jarvis = function() {

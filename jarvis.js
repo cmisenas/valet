@@ -35,6 +35,10 @@
             77: "https://maps.google.com/?q=%s", //m
           },
           qs = '';
+      
+      if (typeof $ === 'undefined') {
+        $ = jQuery;
+      }
 
 			function getSelText() {
 				var s = '';
@@ -48,15 +52,14 @@
 				return s;
 			}
 
-      $(document).on('keyup keydown', function(e) {
+      $(document).on('keyup', function(e) {
+        delete keys[e.keyCode];
+      });
+
+      $(document).on('keydown', function(e) {
         var s = getSelText();
         if (s) {
-          
-          if (e.type === "keyup") {
-            delete keys[e.keyCode];
-          } else {
-            keys[e.keyCode] = true;
-          }
+          keys[e.keyCode] = true;
 
           if (keys[17] && keys[16]) {
             console.log(keys);
